@@ -42,7 +42,7 @@ class Frameless(Frame, metaclass=_FramelessMeta):
     @property
     def fields(self):
         """Return a list of fields for this document"""
-        return self._document.keys()
+        return list(self._document.keys())
 
     @classmethod
     def _flatten_projection(cls, projection):
@@ -60,7 +60,7 @@ class Frameless(Frame, metaclass=_FramelessMeta):
         references = {}
         subs = {}
         inclusive = True
-        for key, value in deepcopy(projection).items():
+        for key, value in list(deepcopy(projection).items()):
             if isinstance(value, dict):
                 # Store a reference/SubFrame projection
                 if '$ref' in value:

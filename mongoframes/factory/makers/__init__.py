@@ -69,7 +69,7 @@ class DictOf(Maker):
 
     def _assemble(self):
         table = {}
-        for k, v in self._table.items():
+        for k, v in list(self._table.items()):
             if isinstance(v, Maker):
                 table[k] = v._assemble()
             else:
@@ -78,7 +78,7 @@ class DictOf(Maker):
 
     def _finish(self, value):
         table = {}
-        for k, v in self._table.items():
+        for k, v in list(self._table.items()):
             if isinstance(v, Maker):
                 table[k] = self._table[k]._finish(value[k])
             else:
@@ -256,7 +256,7 @@ class SubFactory(Maker):
         sub_frame = self._blueprint.get_frame_cls()(document)
 
         # Apply any meta fields
-        for key, value in meta_document.items():
+        for key, value in list(meta_document.items()):
             setattr(sub_frame, key, value)
 
         return sub_frame

@@ -113,7 +113,7 @@ class ChangeLogEntry(Frame):
         changes = {}
 
         # Check for additions and updates
-        for new_key, new_value in new.items():
+        for new_key, new_value in list(new.items()):
 
             # Additions
             if new_key not in original:
@@ -137,7 +137,7 @@ class ChangeLogEntry(Frame):
                     changes['updates'][new_key] = ['*****', '*****']
 
         # Check for deletions
-        for original_key, original_value in original.items():
+        for original_key, original_value in list(original.items()):
             if original_key not in new:
                 if 'deletions' not in changes:
                     changes['deletions'] = {}
@@ -271,13 +271,13 @@ class ComparableFrame(Frame):
 
         # Remove any empty values
         clean_document_dict = {}
-        for k, v in document_dict.items():
+        for k, v in list(document_dict.items()):
             if not v and not isinstance(v, (int, float)):
                 continue
             clean_document_dict[k] = v
 
         # Convert any referenced fields to Frames
-        for ref_field, ref_cls in self._compared_refs.items():
+        for ref_field, ref_cls in list(self._compared_refs.items()):
             ref = getattr(self, ref_field)
             if not ref:
                 continue
@@ -350,7 +350,7 @@ class ComparableFrame(Frame):
         # Update the frame
         _fields = fields
         if len(fields) == 0:
-             _fields = data.keys()
+             _fields = list(data.keys())
 
         for field in _fields:
             if field in data:
@@ -387,6 +387,6 @@ class ComparableFrame(Frame):
 
         # Dictionaries
         elif isinstance(value, dict):
-            return {k: cls.compare_safe(v) for k, v in value.items()}
+            return {k: cls.compare_safe(v) for k, v in list(value.items())}
 
         return value

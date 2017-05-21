@@ -498,7 +498,7 @@ def test_projection(mongo_client, example_dataset_one):
         projection={'misc': {'$ref': Lair}}
         )
 
-    assert len(burt.misc.keys()) == 1
+    assert len(list(burt.misc.keys())) == 1
     assert burt.misc['cave'].name == 'Cave'
 
     # Test list of sub-frames
@@ -520,7 +520,7 @@ def test_projection(mongo_client, example_dataset_one):
         projection={'misc': {'$sub.': Inventory}}
         )
 
-    assert len(burt.misc.keys()) == 1
+    assert len(list(burt.misc.keys())) == 1
     assert burt.misc['spare'].skulls == 100
 
 

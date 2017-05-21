@@ -87,7 +87,7 @@ class _BaseFrame:
 
         # Dictionaries
         elif isinstance(value, dict):
-            return {k:cls._json_safe(v) for k, v in value.items()}
+            return {k:cls._json_safe(v) for k, v in list(value.items())}
 
         return value
 
@@ -508,7 +508,7 @@ class Frame(_BaseFrame, metaclass=_FrameMeta):
         """Convert embedded documents to sub-frames for one or more documents"""
 
         # Dereference each reference
-        for path, projection in subs.items():
+        for path, projection in list(subs.items()):
 
             # Get the SubFrame class we'll use to wrap the embedded document
             sub = None
@@ -531,8 +531,8 @@ class Frame(_BaseFrame, metaclass=_FrameMeta):
                 if isinstance(value, dict):
                     if expect_map:
                         # Dictionary of embedded documents
-                        raw_subs += value.values()
-                        value = {k: sub(v) for k, v in value.items() \
+                        raw_subs += list(value.values())
+                        value = {k: sub(v) for k, v in list(value.items()) \
                                 if isinstance(v, dict)}
                     # Single embedded document
                     else:
@@ -562,7 +562,7 @@ class Frame(_BaseFrame, metaclass=_FrameMeta):
         """Dereference one or more documents"""
 
         # Dereference each reference
-        for path, projection in references.items():
+        for path, projection in list(references.items()):
 
             # Check there is a $ref in the projection, else skip it
             if '$ref' not in projection:
@@ -579,7 +579,7 @@ class Frame(_BaseFrame, metaclass=_FrameMeta):
                     ids.update(value)
 
                 elif isinstance(value, dict):
-                    ids.update(value.values())
+                    ids.update(list(value.values()))
 
                 else:
                     ids.add(value)
@@ -604,7 +604,7 @@ class Frame(_BaseFrame, metaclass=_FrameMeta):
 
                 elif isinstance(value, dict):
                     # Dictionary of references
-                    value = {key: frames.get(id) for key, id in value.items()}
+                    value = {key: frames.get(id) for key, id in list(value.items())}
 
                 else:
                     value = frames.get(value, None)
@@ -631,7 +631,7 @@ class Frame(_BaseFrame, metaclass=_FrameMeta):
         references = {}
         subs = {}
         inclusive = True
-        for key, value in deepcopy(projection).items():
+        for key, value in list(deepcopy(projection).items()):
             if isinstance(value, dict):
                 # Store a reference/sub-frame projection
                 if '$ref' in value:
@@ -763,7 +763,7 @@ class SubFrame(_BaseFrame):
         # Find reference and sub-frame mappings
         references = {}
         subs = {}
-        for key, value in deepcopy(projection).items():
+        for key, value in list(deepcopy(projection).items()):
 
             if not isinstance(value, dict):
                 continue

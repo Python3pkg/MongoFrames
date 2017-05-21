@@ -249,7 +249,7 @@ def deep_merge(source, dest):
     This code was taken directly from the mongothon project:
     https://github.com/gamechanger/mongothon/tree/master/mongothon
     """
-    for key, value in source.items():
+    for key, value in list(source.items()):
         if key in dest:
             if isinstance(value, dict) and isinstance(dest[key], dict):
                 deep_merge(value, dest[key])
@@ -279,6 +279,6 @@ def to_refs(value):
 
     # Dictionaries
     elif isinstance(value, dict):
-        return {k: to_refs(v) for k, v in value.items()}
+        return {k: to_refs(v) for k, v in list(value.items())}
 
     return value

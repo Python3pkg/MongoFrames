@@ -48,7 +48,7 @@ def test_paginator(example_dataset):
     # Check the results are as expected
     assert paginator.item_count == 1000
     assert paginator.page_count == 50
-    assert paginator.page_numbers == range(1, 51)
+    assert paginator.page_numbers == list(range(1, 51))
 
     i = 0
     for page in paginator:
@@ -65,7 +65,7 @@ def test_paginator_with_filter(example_dataset):
     # Check the results are as expected
     assert paginator.item_count == 100
     assert paginator.page_count == 5
-    assert paginator.page_numbers == range(1, 6)
+    assert paginator.page_numbers == list(range(1, 6))
 
     i = 900
     for page in paginator:
@@ -82,7 +82,7 @@ def test_paginator_with_sort(example_dataset):
     # Check the results are as expected
     assert paginator.item_count == 1000
     assert paginator.page_count == 50
-    assert paginator.page_numbers == range(1, 51)
+    assert paginator.page_numbers == list(range(1, 51))
 
     i = 999
     for page in paginator:
@@ -99,7 +99,7 @@ def test_paginator_with_projection(example_dataset):
     # Check the results are as expected
     assert paginator.item_count == 1000
     assert paginator.page_count == 50
-    assert paginator.page_numbers == range(1, 51)
+    assert paginator.page_numbers == list(range(1, 51))
 
     for page in paginator:
         for orc in page:
@@ -115,7 +115,7 @@ def test_paginator_with_per_page(example_dataset):
     # Check the results are as expected
     assert paginator.item_count == 1000
     assert paginator.page_count == 10
-    assert paginator.page_numbers == range(1, 11)
+    assert paginator.page_numbers == list(range(1, 11))
 
     i = 0
     for page in paginator:
@@ -132,7 +132,7 @@ def test_paginator_with_orphans(example_dataset):
     # Check the results are as expected
     assert paginator.item_count == 82
     assert paginator.page_count == 4
-    assert paginator.page_numbers == range(1, 5)
+    assert paginator.page_numbers == list(range(1, 5))
 
     i = 918
     for page in paginator:
@@ -155,7 +155,7 @@ def test_page(example_dataset):
     # First page
     page = paginator[1]
     assert page.prev == None
-    assert page.next == 2
+    assert page.__next__ == 2
     assert page.number == 1
     assert len(page) == paginator.per_page
 
@@ -167,7 +167,7 @@ def test_page(example_dataset):
     # Second page
     page = paginator[2]
     assert page.prev == 1
-    assert page.next == 3
+    assert page.__next__ == 3
     assert page.number == 2
 
     i = 20
@@ -178,7 +178,7 @@ def test_page(example_dataset):
     # Last page
     page = paginator[paginator.page_count]
     assert page.prev == paginator.page_count - 1
-    assert page.next == None
+    assert page.__next__ == None
     assert page.number == paginator.page_count
 
     # Find the offset of Orc 992

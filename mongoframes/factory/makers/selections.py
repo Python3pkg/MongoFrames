@@ -196,7 +196,7 @@ class SomeOf(Maker):
                 with_replacement=self._with_replacement
                 )
         else:
-            sample_range = range(0, len(self._items))
+            sample_range = list(range(0, len(self._items)))
             if self._with_replacement:
                 sample_indexes = [random.choice(sample_range) \
                     for s in range(0, sample_size)]

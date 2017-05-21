@@ -1,6 +1,6 @@
 from mongoengine import *
 
-from __init__ import build_test_data, connect_to_db, time_it
+from .__init__ import build_test_data, connect_to_db, time_it
 
 
 # Define models

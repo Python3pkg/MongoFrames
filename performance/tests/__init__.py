@@ -140,11 +140,11 @@ def time_it(func, calls, *args, **kwargs):
     worst = times[-1]
     average = sum(times) / float(len(times))
 
-    print(
+    print((
         '{func_name: <32} {best: 02.3f} {worst: 02.3f} {average: 02.3f}'.format(
             func_name=func.__name__,
             best=best,
             worst=worst,
             average=average
             )
-        )
+        ))

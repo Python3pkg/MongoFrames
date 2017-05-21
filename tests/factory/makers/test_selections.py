@@ -188,7 +188,7 @@ def test_some_of():
 
     # Define the choices we'll be sampling from
     choices = ['foo', 'bar', 'zee', 'oof', 'rab', 'eez']
-    choices_range = range(0, len(choices))
+    choices_range = list(range(0, len(choices)))
     choices_set = set(choices)
 
     # Configured to return a sample from a list of python types

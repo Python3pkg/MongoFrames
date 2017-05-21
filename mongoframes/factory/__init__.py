@@ -81,7 +81,7 @@ class Factory:
             frame = blueprint.get_frame_cls()(document)
 
             # Apply any meta fields
-            for key, value in meta_document.items():
+            for key, value in list(meta_document.items()):
                 setattr(frame, key, value)
 
             frames.append(frame)

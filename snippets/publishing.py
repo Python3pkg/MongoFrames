@@ -89,7 +89,7 @@ class PublisherFrame(Frame):
                 published = self.__class__()
 
             # Update the document
-            for field, value in publisher_doc.items():
+            for field, value in list(publisher_doc.items()):
                 setattr(published, field, value)
 
             # Save published version
@@ -154,7 +154,7 @@ class PublisherFrame(Frame):
         with self.published_context():
             published = self.one(Q._uid == self._uid)
 
-        for field, value in draft._document.items():
+        for field, value in list(draft._document.items()):
             if field in self._unpublished_fields:
                 continue
             setattr(draft, field, getattr(published, field))

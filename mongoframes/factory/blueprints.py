@@ -23,7 +23,7 @@ class _BlueprintMeta(type):
         # Ensure the instructions are an ordered dictionary
         dct['_instructions'] = OrderedDict(dct['_instructions'])
 
-        for k, v in dct.items():
+        for k, v in list(dct.items()):
             if isinstance(v, Maker):
                 dct['_instructions'][k] = v
 
@@ -75,7 +75,7 @@ class Blueprint(metaclass=_BlueprintMeta):
     def assemble(cls):
         """Assemble a single document using the blueprint"""
         document = {}
-        for field_name, maker in cls._instructions.items():
+        for field_name, maker in list(cls._instructions.items()):
             with maker.target(document):
                 document[field_name] = maker()
         return document
@@ -87,7 +87,7 @@ class Blueprint(metaclass=_BlueprintMeta):
         finished values.
         """
         document_copy = {}
-        for field_name, value in document.items():
+        for field_name, value in list(document.items()):
             maker = cls._instructions[field_name]
             with maker.target(document):
                 document_copy[field_name] = maker(value)
@@ -114,7 +114,7 @@ class Blueprint(metaclass=_BlueprintMeta):
         allowing internal counters and alike to be reset.
         """
         # Reset instructions
-        for maker in cls._instructions.values():
+        for maker in list(cls._instructions.values()):
             maker.reset()
 
     # Events

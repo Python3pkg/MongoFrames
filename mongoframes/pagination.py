@@ -135,7 +135,7 @@ class Paginator(object):
         self._page_count = max(1, int(math.ceil(total / float(self._per_page))))
 
         # Create a list of page number that can be used to navigate the results
-        self._page_numbers = range(1, self._page_count + 1)
+        self._page_numbers = list(range(1, self._page_count + 1))
 
     def __getitem__(self, page_number):
         if page_number not in self._page_numbers:
